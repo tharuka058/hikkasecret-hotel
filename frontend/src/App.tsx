@@ -690,7 +690,7 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
 
         {/* Booking widget */}
         <div className="fade-up fade-up-4" style={{ width: "100%", maxWidth: 780 }}>
-          <div style={{
+          <div className="hero-search-bar" style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1.2fr auto",
             background: "rgba(255,255,255,0.97)",
@@ -699,7 +699,7 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
             boxShadow: "0 28px 72px rgba(0,0,0,0.4)",
           }}>
             {/* Check-in */}
-            <div style={{ borderRight: "1px solid #e8d5bc", padding: "14px 18px" }}>
+            <div className="hero-search-item" style={{ borderRight: "1px solid #e8d5bc", padding: "14px 18px" }}>
               <label style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 5, display: "block" }}>
                 CHECK-IN
               </label>
@@ -711,7 +711,7 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
               />
             </div>
             {/* Check-out */}
-            <div style={{ borderRight: "1px solid #e8d5bc", padding: "14px 18px" }}>
+            <div className="hero-search-item" style={{ borderRight: "1px solid #e8d5bc", padding: "14px 18px" }}>
               <label style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 5, display: "block" }}>
                 CHECK-OUT
               </label>
@@ -723,7 +723,7 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
               />
             </div>
             {/* Guests */}
-            <div ref={guestRef} style={{ borderRight: "1px solid #e8d5bc", padding: "14px 18px", position: "relative" }}>
+            <div ref={guestRef} className="hero-search-item" style={{ borderRight: "1px solid #e8d5bc", padding: "14px 18px", position: "relative" }}>
               <label style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 5, display: "block" }}>
                 GUESTS & ROOMS
               </label>
@@ -3598,7 +3598,7 @@ function GallerySection({ theme }: { theme: Theme }) {
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
   const [scrolled, setScrolled] = useState(false);
   const [roomModal, setRoomModal] = useState<typeof ROOMS[0] | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
