@@ -66,7 +66,7 @@ router.get("/", requireAuth, async (req: Request, res: Response) => {
 // PATCH /api/contact/:id/status — mark inquiry as read/replied (admin only)
 router.patch("/:id/status", requireAuth, async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id as string);
     const { status } = req.body as { status: string };
 
     const validStatuses = ["unread", "read", "replied"];

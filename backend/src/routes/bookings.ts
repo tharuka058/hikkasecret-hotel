@@ -145,7 +145,7 @@ router.get("/check-availability", async (req: Request, res: Response) => {
 // ──────────────────────────────────────────────────────────────────────────────
 router.get("/ref/:reference", async (req: Request, res: Response) => {
   try {
-    const ref = req.params.reference.toUpperCase();
+    const ref = (req.params.reference as string).toUpperCase();
     const booking = await prisma.booking.findUnique({
       where: { bookingReference: ref },
       include: { room: true },
@@ -391,7 +391,7 @@ router.post("/", async (req: Request, res: Response) => {
 // ──────────────────────────────────────────────────────────────────────────────
 router.patch("/:id/status", requireAuth, async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id as string);
     const { status } = req.body as { status: string };
 
     const validStatuses = ["pending", "confirmed", "cancelled", "completed"];
@@ -417,7 +417,7 @@ router.patch("/:id/status", requireAuth, async (req: Request, res: Response) => 
 // ──────────────────────────────────────────────────────────────────────────────
 router.delete("/:id", requireAuth, async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id as string);
     const booking = await prisma.booking.update({
       where: { id },
       data: { status: "cancelled" },

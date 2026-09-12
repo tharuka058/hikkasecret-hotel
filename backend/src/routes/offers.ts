@@ -79,7 +79,7 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
 // PUT /api/offers/:id — update offer (admin only)
 router.put("/:id", requireAuth, async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id as string);
     const offer = await prisma.offer.update({
       where: { id },
       data: req.body as object,
@@ -94,7 +94,7 @@ router.put("/:id", requireAuth, async (req: Request, res: Response) => {
 // DELETE /api/offers/:id — deactivate offer (admin only)
 router.delete("/:id", requireAuth, async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id as string);
     await prisma.offer.update({ where: { id }, data: { isActive: false } });
     res.json({ message: "Offer deactivated" });
   } catch (err) {

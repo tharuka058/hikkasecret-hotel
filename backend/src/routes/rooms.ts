@@ -28,7 +28,7 @@ router.get("/", async (_req: Request, res: Response) => {
 // GET /api/rooms/:id — get single room
 router.get("/:id", async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id as string);
     if (isNaN(id)) {
       res.status(400).json({ error: "Invalid room ID" });
       return;
@@ -100,7 +100,7 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
 // PUT /api/rooms/:id — update room (admin only)
 router.put("/:id", requireAuth, async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id as string);
     const body = req.body as {
       name?: string;
       type?: string;
@@ -140,7 +140,7 @@ router.put("/:id", requireAuth, async (req: Request, res: Response) => {
 // DELETE /api/rooms/:id — soft delete (admin only)
 router.delete("/:id", requireAuth, async (req: Request, res: Response) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params.id as string);
     await prisma.room.update({
       where: { id },
       data: { isActive: false },
