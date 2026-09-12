@@ -1,7 +1,11 @@
 // ─── API Service Layer for Hikka Secret Lake Villa ────────────────────────────
 // Provides typed API calls to the Express backend at /api
 
-const BASE_URL = "/api"; // Proxied by Vite to http://localhost:5000
+const BASE_URL = import.meta.env.VITE_API_URL
+  ? (import.meta.env.VITE_API_URL.endsWith("/api")
+      ? import.meta.env.VITE_API_URL
+      : `${import.meta.env.VITE_API_URL}/api`)
+  : "/api";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

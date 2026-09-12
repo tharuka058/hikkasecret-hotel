@@ -55,11 +55,13 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 });
 
 // ─── Start Server ─────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`\n🏨 Hikka Secret Lake Villa API`);
-  console.log(`✅ Server running on http://localhost:${PORT}`);
-  console.log(`📋 Health: http://localhost:${PORT}/api/health`);
-  console.log(`🌐 CORS: Allowing requests from ${FRONTEND_URL}\n`);
-});
+if (process.env.VERCEL !== "1") {
+  app.listen(PORT, () => {
+    console.log(`\n🏨 Hikka Secret Lake Villa API`);
+    console.log(`✅ Server running on http://localhost:${PORT}`);
+    console.log(`📋 Health: http://localhost:${PORT}/api/health`);
+    console.log(`🌐 CORS: Allowing requests from ${FRONTEND_URL}\n`);
+  });
+}
 
 export default app;
