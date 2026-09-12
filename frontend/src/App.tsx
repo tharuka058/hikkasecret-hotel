@@ -501,15 +501,12 @@ function Navbar({
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled
-            ? dark ? "rgba(11,26,38,0.97)" : "rgba(255,251,245,0.97)"
-            : "transparent",
-          backdropFilter: scrolled ? "blur(14px)" : "none",
-          borderBottom: scrolled
-            ? `1px solid ${dark ? "rgba(201,168,76,0.18)" : "rgba(201,168,76,0.3)"}`
-            : "none",
+          background: dark ? "rgba(11,26,38,0.94)" : "rgba(255,251,245,0.96)",
+          backdropFilter: "blur(14px)",
+          borderBottom: `1px solid ${dark ? "rgba(201,168,76,0.2)" : "rgba(201,168,76,0.35)"}`,
+          boxShadow: dark ? "0 4px 24px rgba(0,0,0,0.35)" : "0 4px 20px rgba(13,34,51,0.08)",
         }}
       >
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between" style={{ height: 66 }}>
@@ -520,9 +517,9 @@ function Navbar({
               style={{ display: "flex", flexDirection: "column", gap: 4.5, background: "transparent", border: "none", cursor: "pointer", padding: 3 }}
               aria-label="Open menu"
             >
-              <span style={{ display: "block", width: 18, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
-              <span style={{ display: "block", width: 12, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
-              <span style={{ display: "block", width: 18, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
+              <span style={{ display: "block", width: 18, height: 1.5, background: dark ? "#ffffff" : "#0d2233", borderRadius: 2, transition: "all 0.3s" }} />
+              <span style={{ display: "block", width: 12, height: 1.5, background: dark ? "#ffffff" : "#0d2233", borderRadius: 2, transition: "all 0.3s" }} />
+              <span style={{ display: "block", width: 18, height: 1.5, background: dark ? "#ffffff" : "#0d2233", borderRadius: 2, transition: "all 0.3s" }} />
             </button>
 
             {/* Brand Logo on Left */}
@@ -532,7 +529,7 @@ function Navbar({
                 <span className="text-xs sm:text-base" style={{ fontFamily: "var(--font-serif)", fontWeight: 600, color: "#c9a84c", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>
                   HIKKA SECRET
                 </span>
-                <span className="hidden sm:block" style={{ fontFamily: "var(--font-sans)", fontSize: 8, fontWeight: 400, color: scrolled ? (dark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.45)") : "rgba(255,255,255,0.6)", letterSpacing: "0.2em", textTransform: "uppercase", marginTop: 2 }}>
+                <span className="hidden sm:block" style={{ fontFamily: "var(--font-sans)", fontSize: 8, fontWeight: 400, color: dark ? "rgba(255,255,255,0.5)" : "rgba(13,34,51,0.55)", letterSpacing: "0.2em", textTransform: "uppercase", marginTop: 2 }}>
                   Lake Villa · Hikkaduwa
                 </span>
               </div>
@@ -542,7 +539,7 @@ function Navbar({
           <div className="flex items-center gap-2">
             {/* Theme toggle */}
             <button onClick={toggleTheme}
-              style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, borderRadius: "50%", border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(201,168,76,0.35)"}`, background: "transparent", cursor: "pointer", color: scrolled ? (dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)") : (dark ? "rgba(255,255,255,0.8)" : "#0d2233"), transition: "all 0.2s", flexShrink: 0 }}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 28, height: 28, borderRadius: "50%", border: `1px solid ${dark ? "rgba(255,255,255,0.18)" : "rgba(26,58,82,0.25)"}`, background: "transparent", cursor: "pointer", color: dark ? "rgba(255,255,255,0.85)" : "#0d2233", transition: "all 0.2s", flexShrink: 0 }}
               aria-label="Toggle theme"
             >
               {dark ? <SunIcon /> : <MoonIcon />}
@@ -550,7 +547,7 @@ function Navbar({
             {/* Mobile Find Reservation Button */}
             <button onClick={() => setLookupOpen(true)}
               className="inline-flex sm:hidden items-center gap-1"
-              style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", padding: "6px 8px", background: "transparent", color: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "rgba(255,255,255,0.85)" : "#0d2233"), border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(201,168,76,0.35)"}`, borderRadius: 2, cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}
+              style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", padding: "6px 8px", background: "transparent", color: dark ? "rgba(255,255,255,0.85)" : "#0d2233", border: `1px solid ${dark ? "rgba(201,168,76,0.4)" : "rgba(201,168,76,0.6)"}`, borderRadius: 2, cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}
               title="Find your booking"
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -563,7 +560,7 @@ function Navbar({
             {/* Desktop Find Reservation Button */}
             <button onClick={() => setLookupOpen(true)}
               className="hidden sm:inline-block"
-              style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", padding: "8px 14px", background: "transparent", color: scrolled ? (dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)") : "rgba(255,255,255,0.8)", border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(255,255,255,0.3)"}`, borderRadius: 2, cursor: "pointer", transition: "all 0.2s", whiteSpace: "nowrap" }}
+              style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", padding: "8px 14px", background: "transparent", color: dark ? "rgba(255,255,255,0.85)" : "#0d2233", border: `1px solid ${dark ? "rgba(201,168,76,0.4)" : "rgba(201,168,76,0.5)"}`, borderRadius: 2, cursor: "pointer", transition: "all 0.2s", whiteSpace: "nowrap" }}
               title="Find your booking"
             >
               My Booking
