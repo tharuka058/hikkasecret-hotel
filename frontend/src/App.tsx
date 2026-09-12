@@ -857,12 +857,12 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
           ))}
         </div>
 
-        {/* Slide nav arrows */}
+        {/* Slide nav arrows (hidden on mobile for clean smartphone view) */}
         {[{ dir: -1, pos: "left-4" }, { dir: 1, pos: "right-4" }].map(({ dir, pos }) => (
           <button key={dir}
             onClick={() => goTo((slide + dir + HERO_SLIDES.length) % HERO_SLIDES.length)}
-            className={`absolute ${pos} top-1/2 -translate-y-1/2 z-20`}
-            style={{ width: 44, height: 44, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.3)", background: "rgba(0,0,0,0.25)", backdropFilter: "blur(6px)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.2s" }}
+            className={`hidden sm:flex absolute ${pos} top-1/2 -translate-y-1/2 z-20`}
+            style={{ width: 44, height: 44, borderRadius: "50%", border: "1px solid rgba(255,255,255,0.3)", background: "rgba(0,0,0,0.25)", backdropFilter: "blur(6px)", color: "#fff", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.2s" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(201,168,76,0.4)")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.25)")}
           >
