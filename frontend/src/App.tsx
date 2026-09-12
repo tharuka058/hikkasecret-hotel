@@ -1141,10 +1141,7 @@ function VillaCard({ room, theme, currency, setCurrency, onSelect }: { room: typ
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-center px-6 py-8 md:px-16 h-full" style={{ maxWidth: 580 }}>
-        <div className="flex items-center gap-3 mb-3 flex-wrap">
-          <span style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#c9a84c" }}>{room.type}</span>
-          <span className="inline-block sm:hidden" style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600, color: "#e6c97a", background: "rgba(13,34,51,0.75)", padding: "2px 8px", borderRadius: 2, border: "1px solid rgba(201,168,76,0.3)" }}>Up to 12 guests</span>
-        </div>
+        <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 12 }}>{room.type}</p>
         
         <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 400, color: "#ffffff", lineHeight: 1.1, marginBottom: 12 }}>{room.name}</h3>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 18 }}>{room.desc}</p>
@@ -1174,8 +1171,8 @@ function VillaCard({ room, theme, currency, setCurrency, onSelect }: { room: typ
         </div>
       </div>
 
-      {/* Guest badge top-right */}
-      <div style={{ position: "absolute", top: 24, right: 24, background: "rgba(13,34,51,0.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 3, padding: "8px 16px" }}>
+      {/* Guest badge top-right (desktop only, hidden on mobile) */}
+      <div className="hidden sm:block" style={{ position: "absolute", top: 24, right: 24, background: "rgba(13,34,51,0.75)", backdropFilter: "blur(8px)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 3, padding: "8px 16px" }}>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 2 }}>Entire Property</p>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.75)" }}>Up to {room.maxGuests} guests · Kids Welcome</p>
       </div>
