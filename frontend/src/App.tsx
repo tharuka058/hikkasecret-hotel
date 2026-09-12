@@ -683,7 +683,7 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
   }, [guestOpen]);
 
   return (
-    <section className="relative flex flex-col items-center justify-center overflow-visible" style={{ minHeight: "100vh" }}>
+    <section className="relative flex flex-col items-center justify-center overflow-hidden w-full" style={{ minHeight: "100dvh" }}>
       {/* Slides */}
       <div className="absolute inset-0 overflow-hidden">
         {HERO_SLIDES.map((s, i) => (
@@ -699,15 +699,15 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center px-4 w-full" style={{ paddingTop: "clamp(75px, 12vh, 110px)", paddingBottom: 40 }}>
-        <p className="fade-up fade-up-1" style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 500, letterSpacing: "0.28em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 12 }}>
+      <div className="relative z-10 flex flex-col items-center text-center px-4 w-full" style={{ paddingTop: "clamp(76px, 13vh, 110px)", paddingBottom: "clamp(24px, 4vh, 48px)" }}>
+        <p className="fade-up fade-up-1" style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 500, letterSpacing: "0.28em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 10 }}>
           Hikkaduwa · Sri Lanka
         </p>
-        <h1 className="fade-up fade-up-2" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(34px, 7.5vw, 92px)", fontWeight: 300, lineHeight: 1.05, color: "#ffffff", marginBottom: 14, maxWidth: 820 }}>
+        <h1 className="fade-up fade-up-2" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(30px, 7vw, 92px)", fontWeight: 300, lineHeight: 1.05, color: "#ffffff", marginBottom: 10, maxWidth: 820 }}>
           Hikka Secret<br />
           <em style={{ fontStyle: "italic", color: "#e6c97a" }}>Lake Villa</em>
         </h1>
-        <p className="fade-up fade-up-3" style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(13px, 3.5vw, 15px)", fontWeight: 300, letterSpacing: "0.04em", color: "rgba(255,255,255,0.75)", marginBottom: "clamp(24px, 5vh, 48px)", maxWidth: 460 }}>
+        <p className="fade-up fade-up-3" style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(12px, 3.2vw, 15px)", fontWeight: 300, letterSpacing: "0.04em", color: "rgba(255,255,255,0.78)", marginBottom: "clamp(16px, 3vh, 40px)", maxWidth: 440 }}>
           Your Private Luxury Sanctuary by the Lake &amp; Beach
         </p>
 
