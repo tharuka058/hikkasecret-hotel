@@ -1130,41 +1130,42 @@ function VillaCard({ room, theme, currency, setCurrency, onSelect }: { room: typ
     <div
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
-      style={{ position: "relative", borderRadius: 6, overflow: "hidden", height: 480, cursor: "pointer", boxShadow: hov ? "0 24px 64px rgba(0,0,0,0.4)" : "0 8px 32px rgba(0,0,0,0.2)", transition: "box-shadow 0.3s" }}
+      style={{ position: "relative", borderRadius: 6, overflow: "hidden", minHeight: 480, cursor: "pointer", boxShadow: hov ? "0 24px 64px rgba(0,0,0,0.4)" : "0 8px 32px rgba(0,0,0,0.2)", transition: "box-shadow 0.3s" }}
     >
       {/* Full-bleed image */}
-      <img
-        src={room.thumb}
-        alt={room.name}
-        className="absolute inset-0 w-full h-full object-cover"
+      <img src={room.thumb} alt={room.name} className="w-full h-full object-cover absolute inset-0"
         style={{ transition: "transform 0.7s", transform: hov ? "scale(1.04)" : "scale(1)" }}
       />
       {/* Dark gradient overlay */}
-      <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(13,34,51,0.88) 0%, rgba(13,34,51,0.55) 55%, rgba(13,34,51,0.15) 100%)" }} />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(13,34,51,0.92) 0%, rgba(13,34,51,0.7) 60%, rgba(13,34,51,0.3) 100%)" }} />
 
       {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-center px-12 md:px-16" style={{ maxWidth: 580 }}>
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 12 }}>{room.type}</p>
-        <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4vw, 56px)", fontWeight: 400, color: "#ffffff", lineHeight: 1.1, marginBottom: 16 }}>{room.name}</h3>
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, fontWeight: 300, color: "rgba(255,255,255,0.68)", lineHeight: 1.8, marginBottom: 24 }}>{room.desc}</p>
+      <div className="relative z-10 flex flex-col justify-center px-6 py-8 md:px-16 h-full" style={{ maxWidth: 580 }}>
+        <div className="flex items-center gap-3 mb-3 flex-wrap">
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#c9a84c" }}>{room.type}</span>
+          <span className="inline-block sm:hidden" style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600, color: "#e6c97a", background: "rgba(13,34,51,0.75)", padding: "2px 8px", borderRadius: 2, border: "1px solid rgba(201,168,76,0.3)" }}>Up to 12 guests</span>
+        </div>
+        
+        <h3 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 4vw, 56px)", fontWeight: 400, color: "#ffffff", lineHeight: 1.1, marginBottom: 12 }}>{room.name}</h3>
+        <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 18 }}>{room.desc}</p>
 
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className="flex flex-wrap gap-1.5 mb-6">
           {room.tags.slice(0, 5).map((tag) => (
-            <span key={tag} style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c9a84c", border: "1px solid rgba(201,168,76,0.45)", padding: "4px 12px", borderRadius: 2 }}>{tag}</span>
+            <span key={tag} style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "#c9a84c", border: "1px solid rgba(201,168,76,0.45)", padding: "4px 10px", borderRadius: 2 }}>{tag}</span>
           ))}
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
           <div>
-            <span style={{ fontFamily: "var(--font-serif)", fontSize: 44, fontWeight: 300, color: "#e6c97a" }}>{fmtPrice(room.price, currency)}</span>
-            <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.4)", marginLeft: 6 }}>/night</span>
+            <span style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 300, color: "#e6c97a" }}>{fmtPrice(room.price, currency)}</span>
+            <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.4)", marginLeft: 4 }}>/night</span>
             <select value={currency} onChange={(e) => setCurrency(e.target.value)}
-              style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 600, background: "transparent", border: "1px solid rgba(201,168,76,0.35)", borderRadius: 2, color: "#c9a84c", padding: "3px 6px", cursor: "pointer", outline: "none", marginLeft: 10 }}>
+              style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 600, background: "transparent", border: "1px solid rgba(201,168,76,0.35)", borderRadius: 2, color: "#c9a84c", padding: "3px 6px", cursor: "pointer", outline: "none", marginLeft: 8 }}>
               {CURRENCIES.map((c) => <option key={c.code} value={c.code} style={{ background: "#0d2233", color: "#e8e0d0" }}>{c.code}</option>)}
             </select>
           </div>
           <button onClick={onSelect}
-            style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", padding: "14px 32px", background: "linear-gradient(135deg, #c9a84c 0%, #e6c97a 100%)", color: "#0d2233", border: "none", borderRadius: 2, cursor: "pointer", transition: "opacity 0.2s" }}
+            style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", padding: "12px 22px", background: "linear-gradient(135deg, #c9a84c 0%, #e6c97a 100%)", color: "#0d2233", border: "none", borderRadius: 2, cursor: "pointer", transition: "opacity 0.2s" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = "0.85")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = "1")}
           >
