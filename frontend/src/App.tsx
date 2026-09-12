@@ -954,16 +954,28 @@ function LocationSection({ theme }: { theme: Theme }) {
         {/* Images */}
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2 rounded overflow-hidden" style={{ height: 260, background: "#1a3a52" }}>
-            <img src="/images/gallery/pool-loungers.jpg"
-              alt="Lounge chairs by the pool at sunset" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            <img 
+              src="/images/gallery/pool-reflection.jpg"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/images/gallery/garden-path.jpg"; }}
+              alt="Lounge chairs by the pool at sunset" 
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+            />
           </div>
           <div className="rounded overflow-hidden" style={{ height: 190, background: "#1a3a52" }}>
-            <img src="/images/gallery/garden-path.jpg"
-              alt="Lush tropical garden path" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            <img 
+              src="/images/gallery/garden-path.jpg"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/images/gallery/patio.jpg"; }}
+              alt="Lush tropical garden path" 
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+            />
           </div>
           <div className="rounded overflow-hidden" style={{ height: 190, background: "#1a3a52" }}>
-            <img src="/images/gallery/patio.jpg"
-              alt="Relaxing courtyard patio" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            <img 
+              src="/images/gallery/patio.jpg"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/images/gallery/nature.jpg"; }}
+              alt="Relaxing courtyard patio" 
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" 
+            />
           </div>
         </div>
       </div>
