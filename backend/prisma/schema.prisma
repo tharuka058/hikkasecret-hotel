@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Room {
+  id         Int       @id @default(autoincrement())
+  name       String
+  type       String
+  price      Float
+  size       String
+  maxGuests  Int
+  isVilla    Boolean   @default(false)
+  desc       String
+  tags       String    // JSON array stored as string
+  gallery    String    // JSON array stored as string
+  thumb      String
+  isActive   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  bookings   Booking[]
+}
+
+model Booking {
+  id               Int      @id @default(autoincrement())
+  bookingReference String   @unique
+  roomId           Int?
+  room             Room?    @relation(fields: [roomId], references: [id])
+  roomName         String
+  guestName        String
+  guestEmail       String
+  guestPhone       String   @default("")
+  checkIn          DateTime
+  checkOut         DateTime
+  adults           Int      @default(1)
+  children         Int      @default(0)
+  guestType        String   @default("foreign") // "foreign" | "local"
+  notes            String   @default("")
+  promoCode        String   @default("")
+  discountPercent  Float    @default(0)
+  basePrice        Float    // price per night
+  nights           Int
+  totalPrice       Float    // after discount
+  advancePayment   Float    // 50% of total
+  status           String   @default("pending") // "pending" | "confirmed" | "cancelled" | "completed"
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Offer {
+  id              Int      @id @default(autoincrement())
+  code            String   @unique
+  title           String
+  badge           String
+  desc            String
+  discountPercent Float
+  price           Float?   // starting price if applicable
+  img             String
+  highlight       Boolean  @default(false)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+}
+
+model DiningItem {
+  id        Int      @id @default(autoincrement())
+  title     String
+  desc      String
+  img       String
+  tag       String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Inquiry {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String   @default("")
+  subject   String   @default("General Inquiry")
+  message   String
+  status    String   @default("unread") // "unread" | "read" | "replied"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String
+  role         String   @default("staff") // "admin" | "staff"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

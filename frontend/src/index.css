@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+html, body, #root {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { display: none; }
+
+@theme {
+  --color-gold:       #c9a84c;
+  --color-gold-light: #e6c97a;
+  --color-gold-dim:   #a88630;
+  --color-lake:       #1a3a52;
+  --color-lake-deep:  #0d2233;
+  --color-sand:       #f5ede0;
+  --color-sand-dark:  #e8d5bc;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:  'Jost', system-ui, sans-serif;
+}
+
+/* Slide-up entrance */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.7s ease both; }
+.fade-up-1 { animation-delay: 0.1s; }
+.fade-up-2 { animation-delay: 0.25s; }
+.fade-up-3 { animation-delay: 0.4s; }
+.fade-up-4 { animation-delay: 0.55s; }
+
+/* Crossfade slideshow */
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+/* Modal backdrop */
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: translateY(32px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Dark mode overrides */
+.dark-mode {
+  --bg-page:   #0b1a26;
+  --bg-card:   #112233;
+  --text-main: #e8e0d0;
+  --border-c:  rgba(255,255,255,0.08);
+}
+.light-mode {
+  --bg-page:   #f9f5ef;
+  --bg-card:   #ffffff;
+  --text-main: #0d2233;
+  --border-c:  #e8d5bc;
+}
