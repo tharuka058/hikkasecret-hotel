@@ -512,24 +512,24 @@ function Navbar({
             : "none",
         }}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between" style={{ height: 70 }}>
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-6 flex items-center justify-between" style={{ height: 68 }}>
           {/* Left Group: Hamburger + Logo */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             {/* Hamburger */}
             <button onClick={() => setMenuOpen(true)}
-              style={{ display: "flex", flexDirection: "column", gap: 5, background: "transparent", border: "none", cursor: "pointer", padding: 4 }}
+              style={{ display: "flex", flexDirection: "column", gap: 5, background: "transparent", border: "none", cursor: "pointer", padding: 3 }}
               aria-label="Open menu"
             >
-              <span style={{ display: "block", width: 20, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
-              <span style={{ display: "block", width: 14, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
-              <span style={{ display: "block", width: 20, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
+              <span style={{ display: "block", width: 18, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
+              <span style={{ display: "block", width: 13, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
+              <span style={{ display: "block", width: 18, height: 1.5, background: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "#ffffff" : "#0d2233"), borderRadius: 2, transition: "all 0.3s" }} />
             </button>
 
             {/* Brand Logo on Left */}
-            <a href="#" className="flex items-center gap-2 sm:gap-3 select-none cursor-pointer text-left" style={{ textDecoration: "none" }}>
+            <a href="#" className="flex items-center gap-1.5 sm:gap-3 select-none cursor-pointer text-left" style={{ textDecoration: "none" }}>
               <VillaLogoIcon />
               <div className="flex flex-col leading-none">
-                <span style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(14px, 4.2vw, 18px)", fontWeight: 600, color: "#c9a84c", letterSpacing: "0.04em", whiteSpace: "nowrap" }}>
+                <span style={{ fontFamily: "var(--font-serif)", fontSize: 14, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>
                   HIKKA SECRET
                 </span>
                 <span className="hidden sm:block" style={{ fontFamily: "var(--font-sans)", fontSize: 8, fontWeight: 400, color: scrolled ? (dark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.45)") : "rgba(255,255,255,0.6)", letterSpacing: "0.2em", textTransform: "uppercase", marginTop: 2 }}>
@@ -542,7 +542,7 @@ function Navbar({
           <div className="flex items-center gap-1.5 sm:gap-3">
             {/* Theme toggle */}
             <button onClick={toggleTheme}
-              style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, borderRadius: "50%", border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(201,168,76,0.3)"}`, background: "transparent", cursor: "pointer", color: scrolled ? (dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)") : (dark ? "rgba(255,255,255,0.8)" : "#0d2233"), transition: "all 0.2s", flexShrink: 0 }}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 30, height: 30, borderRadius: "50%", border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(201,168,76,0.3)"}`, background: "transparent", cursor: "pointer", color: scrolled ? (dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)") : (dark ? "rgba(255,255,255,0.8)" : "#0d2233"), transition: "all 0.2s", flexShrink: 0 }}
               aria-label="Toggle theme"
             >
               {dark ? <SunIcon /> : <MoonIcon />}
@@ -557,7 +557,7 @@ function Navbar({
             </button>
             {/* Book CTA */}
             <button onClick={onBook}
-              style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", padding: "7px 12px", background: "linear-gradient(135deg, #c9a84c 0%, #e6c97a 100%)", color: "#0d2233", border: "none", borderRadius: 2, cursor: "pointer", transition: "opacity 0.2s, transform 0.15s", whiteSpace: "nowrap", flexShrink: 0 }}
+              style={{ fontFamily: "var(--font-sans)", fontSize: 9.5, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", padding: "6px 10px", background: "linear-gradient(135deg, #c9a84c 0%, #e6c97a 100%)", color: "#0d2233", border: "none", borderRadius: 2, cursor: "pointer", transition: "opacity 0.2s, transform 0.15s", whiteSpace: "nowrap", flexShrink: 0 }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.opacity = "0.88"; (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
             >
