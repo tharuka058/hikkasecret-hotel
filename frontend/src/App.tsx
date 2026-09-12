@@ -547,7 +547,20 @@ function Navbar({
             >
               {dark ? <SunIcon /> : <MoonIcon />}
             </button>
-            {/* Find Reservation */}
+            {/* Mobile Find Reservation Button */}
+            <button onClick={() => setLookupOpen(true)}
+              className="inline-flex sm:hidden items-center gap-1"
+              style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase", padding: "6px 8px", background: "transparent", color: scrolled ? (dark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)") : (dark ? "rgba(255,255,255,0.85)" : "#0d2233"), border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(201,168,76,0.35)"}`, borderRadius: 2, cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}
+              title="Find your booking"
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <span>Booking</span>
+            </button>
+
+            {/* Desktop Find Reservation Button */}
             <button onClick={() => setLookupOpen(true)}
               className="hidden sm:inline-block"
               style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", padding: "8px 14px", background: "transparent", color: scrolled ? (dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)") : "rgba(255,255,255,0.8)", border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(255,255,255,0.3)"}`, borderRadius: 2, cursor: "pointer", transition: "all 0.2s", whiteSpace: "nowrap" }}
@@ -579,11 +592,23 @@ function Navbar({
           <div className="absolute top-0 left-0 h-full" style={{ width: 320, background: dark ? "#0b1a26" : "#ffffff", boxShadow: "4px 0 40px rgba(0,0,0,0.3)", animation: "modalSlideIn 0.3s ease", display: "flex", flexDirection: "column", padding: "32px 40px" }}>
             {/* Close */}
             <button onClick={() => setMenuOpen(false)}
-              style={{ alignSelf: "flex-start", background: "transparent", border: "none", cursor: "pointer", color: dark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)", marginBottom: 48, padding: 0 }}
+              style={{ alignSelf: "flex-start", background: "transparent", border: "none", cursor: "pointer", color: dark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)", marginBottom: 32, padding: 0 }}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                 <path d="M3 3l14 14M17 3L3 17" />
               </svg>
+            </button>
+
+            {/* Quick Find Booking CTA inside Side Drawer */}
+            <button
+              onClick={() => { setMenuOpen(false); setLookupOpen(true); }}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "12px 16px", background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.35)", borderRadius: 4, color: "#c9a84c", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 24, cursor: "pointer", width: "100%" }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <span>My Booking / Lookup</span>
             </button>
 
             {/* Links */}
