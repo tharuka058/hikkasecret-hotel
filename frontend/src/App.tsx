@@ -689,8 +689,88 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
           Your Private Luxury Sanctuary by the Lake &amp; Beach
         </p>
 
-        {/* Booking widget */}
-        <div className="fade-up fade-up-4 w-full" style={{ maxWidth: 780 }}>
+        {/* Booking widget — Dedicated Mobile View (< 768px) */}
+        <div className="fade-up fade-up-4 w-full block md:hidden max-w-sm mx-auto">
+          <div style={{ background: "rgba(255,255,255,0.96)", backdropFilter: "blur(12px)", borderRadius: 8, padding: 12, border: "1px solid #e8d5bc", boxShadow: "0 20px 48px rgba(0,0,0,0.35)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+              {/* Check-in */}
+              <div style={{ background: "#fcf8f2", padding: "10px 12px", borderRadius: 6, border: "1px solid #e8d5bc" }}>
+                <label style={{ fontFamily: "var(--font-sans)", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 3, display: "block" }}>
+                  CHECK-IN
+                </label>
+                <DateInput value={checkin} onChange={setCheckin} placeholder="dd/mm/yyyy" inputStyle={{ border: "none", outline: "none", fontSize: 12, color: "#0d2233", background: "transparent", padding: 0, width: "100%" }} />
+              </div>
+              {/* Check-out */}
+              <div style={{ background: "#fcf8f2", padding: "10px 12px", borderRadius: 6, border: "1px solid #e8d5bc" }}>
+                <label style={{ fontFamily: "var(--font-sans)", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 3, display: "block" }}>
+                  CHECK-OUT
+                </label>
+                <DateInput value={checkout} onChange={setCheckout} placeholder="dd/mm/yyyy" inputStyle={{ border: "none", outline: "none", fontSize: 12, color: "#0d2233", background: "transparent", padding: 0, width: "100%" }} />
+              </div>
+            </div>
+
+            {/* Guests */}
+            <div style={{ background: "#fcf8f2", padding: "10px 12px", borderRadius: 6, border: "1px solid #e8d5bc", marginBottom: 10, position: "relative" }}>
+              <label style={{ fontFamily: "var(--font-sans)", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 3, display: "block" }}>
+                GUESTS & ROOMS
+              </label>
+              <button
+                type="button"
+                onClick={() => setGuestOpen((o) => !o)}
+                style={{ border: "none", outline: "none", fontFamily: "var(--font-sans)", fontSize: 12, color: "#0d2233", background: "transparent", cursor: "pointer", textAlign: "left", display: "flex", alignItems: "center", justifyContent: "space-between", padding: 0, width: "100%" }}
+              >
+                <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{guestLabel}</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#0d2233" strokeWidth="1.5" strokeLinecap="round" style={{ transform: guestOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s", flexShrink: 0 }}>
+                  <path d="M2 4l4 4 4-4" />
+                </svg>
+              </button>
+
+              {guestOpen && (
+                <div onClick={(e) => e.stopPropagation()} style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, width: "100%", maxHeight: "55vh", overflowY: "auto", background: "#ffffff", borderRadius: 6, boxShadow: "0 16px 40px rgba(0,0,0,0.3)", zIndex: 200, border: "1px solid #e8d5bc" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderBottom: "1px solid #f0e8dc", background: "#fdf9f5" }}>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: "#0d2233", margin: 0 }}>Rooms</p>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <button type="button" onClick={() => rooms.length > 1 && removeRoom(rooms.length - 1)} style={{ width: 26, height: 26, borderRadius: "50%", border: `1px solid ${rooms.length > 1 ? "#c9a84c" : "#e0d0bc"}`, background: "transparent", color: rooms.length > 1 ? "#c9a84c" : "#ccc", fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", cursor: rooms.length > 1 ? "pointer" : "default" }}>−</button>
+                      <span style={{ fontFamily: "var(--font-sans)", fontSize: 13, fontWeight: 700, color: "#0d2233" }}>{rooms.length}</span>
+                      <button type="button" onClick={addRoom} style={{ width: 26, height: 26, borderRadius: "50%", border: "1px solid #c9a84c", background: "transparent", color: "#c9a84c", fontSize: 15, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>+</button>
+                    </div>
+                  </div>
+                  {rooms.map((rm, ri) => (
+                    <div key={ri} style={{ borderBottom: "1px solid #f0e8dc", padding: "8px 14px" }}>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 6 }}>Room {ri + 1}</p>
+                      {[
+                        { label: "Adults", field: "adults" as const, val: rm.adults, min: 1, max: 10 },
+                        { label: "Children", field: "children" as const, val: rm.children, min: 0, max: 6 },
+                      ].map((row) => (
+                        <div key={row.field} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", margin: "4px 0" }}>
+                          <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#0d2233" }}>{row.label}</span>
+                          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                            <button type="button" onClick={() => updateRoom(ri, row.field, Math.max(row.min, row.val - 1))} style={{ width: 24, height: 24, borderRadius: "50%", border: "1px solid #c9a84c", background: "transparent", color: "#c9a84c", fontSize: 14 }}>−</button>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "#0d2233" }}>{row.val}</span>
+                            <button type="button" onClick={() => updateRoom(ri, row.field, Math.min(row.max, row.val + 1))} style={{ width: 24, height: 24, borderRadius: "50%", border: "1px solid #c9a84c", background: "transparent", color: "#c9a84c", fontSize: 14 }}>+</button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                  <div style={{ padding: "8px 14px", background: "#fdf9f5", display: "flex", justifyContent: "flex-end" }}>
+                    <button type="button" onClick={() => setGuestOpen(false)} style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 700, color: "#fff", background: "#c9a84c", border: "none", borderRadius: 2, padding: "6px 16px" }}>Done ✓</button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => onBook({ checkin, checkout, adults: totalAdults, children: totalChildren, roomsCount: rooms.length, roomConfigs: rooms })}
+              style={{ width: "100%", padding: "12px 0", background: "linear-gradient(135deg, #c9a84c 0%, #b8933a 100%)", color: "#0d2233", fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", border: "none", cursor: "pointer", borderRadius: 4, boxShadow: "0 4px 14px rgba(201,168,76,0.35)" }}
+            >
+              Check Availability
+            </button>
+          </div>
+        </div>
+
+        {/* Booking widget — Dedicated Desktop View (>= 768px) */}
+        <div className="fade-up fade-up-4 w-full hidden md:block" style={{ maxWidth: 780 }}>
           <div className="hero-search-bar" style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1.2fr auto",
@@ -731,7 +811,7 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
               <button
                 type="button"
                 onClick={() => setGuestOpen((o) => !o)}
-                style={{ border: "none", outline: "none", fontFamily: "var(--font-sans)", fontSize: 13, color: "#0d2233", background: "transparent", cursor: "pointer", textAlign: "left", display: "flex", alignItems: "center", gap: 6, padding: 0, width: "100%" }}
+                style={{ border: "none", outline: "none", fontFamily: "var(--font-sans)", fontSize: 13, color: "#0d2233", background: "transparent", cursor: "pointer", textAlign: "left", display: "flex", items: "center", gap: 6, padding: 0, width: "100%" }}
               >
                 <span style={{ flex: 1 }}>{guestLabel}</span>
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#0d2233" strokeWidth="1.5" strokeLinecap="round"
@@ -740,7 +820,7 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
                 </svg>
               </button>
 
-              {/* Dropdown panel — fixed width, does NOT stretch parent */}
+              {/* Dropdown panel */}
               {guestOpen && (
                 <div
                   onClick={(e) => e.stopPropagation()}
