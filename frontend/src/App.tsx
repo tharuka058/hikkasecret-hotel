@@ -549,14 +549,15 @@ function Navbar({
             </button>
             {/* Find Reservation */}
             <button onClick={() => setLookupOpen(true)}
-              style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", padding: "11px 16px", background: "transparent", color: scrolled ? (dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)") : "rgba(255,255,255,0.8)", border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(255,255,255,0.3)"}`, borderRadius: 2, cursor: "pointer", transition: "all 0.2s", whiteSpace: "nowrap" }}
+              className="hidden sm:inline-block"
+              style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", padding: "9px 14px", background: "transparent", color: scrolled ? (dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)") : "rgba(255,255,255,0.8)", border: `1px solid ${scrolled ? (dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)") : "rgba(255,255,255,0.3)"}`, borderRadius: 2, cursor: "pointer", transition: "all 0.2s", whiteSpace: "nowrap" }}
               title="Find your booking"
             >
               My Booking
             </button>
             {/* Book CTA */}
             <button onClick={onBook}
-              style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", padding: "11px 24px", background: "linear-gradient(135deg, #c9a84c 0%, #e6c97a 100%)", color: "#0d2233", border: "none", borderRadius: 2, cursor: "pointer", transition: "opacity 0.2s, transform 0.15s" }}
+              style={{ fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", padding: "9px 16px", background: "linear-gradient(135deg, #c9a84c 0%, #e6c97a 100%)", color: "#0d2233", border: "none", borderRadius: 2, cursor: "pointer", transition: "opacity 0.2s, transform 0.15s", whiteSpace: "nowrap" }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.opacity = "0.88"; (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
             >
@@ -676,20 +677,20 @@ function Hero({ onBook }: { onBook: (prefill?: BookingPrefill) => void }) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6" style={{ paddingTop: 110 }}>
-        <p className="fade-up fade-up-1" style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 500, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 18 }}>
+      <div className="relative z-10 flex flex-col items-center text-center px-4 w-full" style={{ paddingTop: "clamp(75px, 12vh, 110px)", paddingBottom: 40 }}>
+        <p className="fade-up fade-up-1" style={{ fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 500, letterSpacing: "0.28em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 12 }}>
           Hikkaduwa · Sri Lanka
         </p>
-        <h1 className="fade-up fade-up-2" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(48px, 7.5vw, 100px)", fontWeight: 300, lineHeight: 1.04, color: "#ffffff", marginBottom: 18, maxWidth: 820 }}>
+        <h1 className="fade-up fade-up-2" style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(34px, 7.5vw, 92px)", fontWeight: 300, lineHeight: 1.05, color: "#ffffff", marginBottom: 14, maxWidth: 820 }}>
           Hikka Secret<br />
           <em style={{ fontStyle: "italic", color: "#e6c97a" }}>Lake Villa</em>
         </h1>
-        <p className="fade-up fade-up-3" style={{ fontFamily: "var(--font-sans)", fontSize: 15, fontWeight: 300, letterSpacing: "0.05em", color: "rgba(255,255,255,0.7)", marginBottom: 52, maxWidth: 460 }}>
+        <p className="fade-up fade-up-3" style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(13px, 3.5vw, 15px)", fontWeight: 300, letterSpacing: "0.04em", color: "rgba(255,255,255,0.75)", marginBottom: "clamp(24px, 5vh, 48px)", maxWidth: 460 }}>
           Your Private Luxury Sanctuary by the Lake &amp; Beach
         </p>
 
         {/* Booking widget */}
-        <div className="fade-up fade-up-4" style={{ width: "100%", maxWidth: 780 }}>
+        <div className="fade-up fade-up-4 w-full" style={{ maxWidth: 780 }}>
           <div className="hero-search-bar" style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1.2fr auto",
