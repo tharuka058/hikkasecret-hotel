@@ -2,12 +2,12 @@
   "name": "hikka-secret-backend",
   "version": "1.0.0",
   "description": "Backend API for Hikka Secret Lake Villa",
-  "main": "dist/server.js",
+  "main": "src/server.ts",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "npx prisma generate && npx tsc",
-    "vercel-build": "npx prisma generate && npx tsc",
-    "start": "node dist/server.js",
+    "build": "npx prisma generate",
+    "vercel-build": "npx prisma generate",
+    "start": "npx tsx src/server.ts",
     "db:push": "prisma db push",
     "db:seed": "npx tsx prisma/seed.ts",
     "db:studio": "prisma studio",
@@ -21,6 +21,7 @@
     "express": "^4.22.2",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.12.0",
+    "tsx": "^4.23.13",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -31,7 +32,6 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^22.20.1",
     "prisma": "^5.22.0",
-    "tsx": "^4.23.13",
     "typescript": "^5.9.3"
   }
 }
