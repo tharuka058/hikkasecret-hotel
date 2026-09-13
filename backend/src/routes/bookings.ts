@@ -30,38 +30,103 @@ function calcNights(checkIn: Date, checkOut: Date): number {
 // ──────────────────────────────────────────────────────────────────────────────
 // GET /api/bookings/check-availability
 // Global in-memory booking store for serverless environment synchronization
-interface InMemBooking {
+export interface InMemBooking {
   id: number;
+  bookingReference: string;
   roomId?: number;
   roomName: string;
+  guestName: string;
+  guestEmail: string;
+  guestPhone: string;
   checkIn: Date;
   checkOut: Date;
+  adults: number;
+  children: number;
+  guestType: string;
+  notes: string;
+  promoCode: string;
+  discountPercent: number;
+  basePrice: number;
+  nights: number;
+  totalPrice: number;
+  advancePayment: number;
   status: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
-const serverlessBookingsStore: InMemBooking[] = [
+
+export const serverlessBookingsStore: InMemBooking[] = [
   {
     id: 1,
+    bookingReference: "HSV-00001",
     roomId: 1,
     roomName: "Deluxe Double Room",
+    guestName: "Sarah Johnson",
+    guestEmail: "sarah.johnson@example.com",
+    guestPhone: "+44 20 7946 0958",
     checkIn: new Date("2026-09-15"),
     checkOut: new Date("2026-09-18"),
+    adults: 2,
+    children: 0,
+    guestType: "foreign",
+    notes: "Honeymoon trip",
+    promoCode: "HSVHONEY",
+    discountPercent: 10,
+    basePrice: 85,
+    nights: 3,
+    totalPrice: 229.5,
+    advancePayment: 57.38,
     status: "confirmed",
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 2,
+    bookingReference: "HSV-00002",
     roomId: 2,
     roomName: "The Lake Apartment",
+    guestName: "Ravi Perera",
+    guestEmail: "ravi.perera@example.lk",
+    guestPhone: "+94 77 123 4567",
     checkIn: new Date("2026-09-20"),
     checkOut: new Date("2026-09-25"),
+    adults: 2,
+    children: 2,
+    guestType: "local",
+    notes: "Family holiday",
+    promoCode: "",
+    discountPercent: 0,
+    basePrice: 150,
+    nights: 5,
+    totalPrice: 750,
+    advancePayment: 187.5,
     status: "pending",
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 3,
+    bookingReference: "HSV-00003",
     roomId: 3,
     roomName: "Whole Villa",
+    guestName: "Michael Chen",
+    guestEmail: "michael.chen@techcorp.com",
+    guestPhone: "+1 415 555 0199",
     checkIn: new Date("2026-10-01"),
     checkOut: new Date("2026-10-07"),
+    adults: 8,
+    children: 3,
+    guestType: "foreign",
+    notes: "Corporate team retreat",
+    promoCode: "HSVVILLA",
+    discountPercent: 5,
+    basePrice: 490,
+    nights: 6,
+    totalPrice: 2793,
+    advancePayment: 698.25,
     status: "confirmed",
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
 
@@ -316,82 +381,21 @@ router.get("/", requireAuth, async (req: Request, res: Response) => {
         pages: Math.ceil(total / parseInt(limit)),
       };
     } catch {
-      // Fallback data for serverless environment
-      const defaultBookings = [
-        {
-          id: 1,
-          bookingReference: "HSV-00001",
-          roomName: "Deluxe Double Room",
-          guestName: "Sarah Johnson",
-          guestEmail: "sarah.johnson@example.com",
-          guestPhone: "+44 20 7946 0958",
-          checkIn: "2026-09-15T00:00:00.000Z",
-          checkOut: "2026-09-18T00:00:00.000Z",
-          adults: 2,
-          children: 0,
-          guestType: "foreign",
-          notes: "Honeymoon trip",
-          promoCode: "HSVHONEY",
-          discountPercent: 10,
-          basePrice: 85,
-          nights: 3,
-          totalPrice: 229.5,
-          advancePayment: 57.38,
-          status: "confirmed",
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: 2,
-          bookingReference: "HSV-00002",
-          roomName: "The Lake Apartment",
-          guestName: "Ravi Perera",
-          guestEmail: "ravi.perera@example.lk",
-          guestPhone: "+94 77 123 4567",
-          checkIn: "2026-09-20T00:00:00.000Z",
-          checkOut: "2026-09-25T00:00:00.000Z",
-          adults: 2,
-          children: 2,
-          guestType: "local",
-          notes: "Family holiday",
-          promoCode: "",
-          discountPercent: 0,
-          basePrice: 150,
-          nights: 5,
-          totalPrice: 750,
-          advancePayment: 187.5,
-          status: "pending",
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-        {
-          id: 3,
-          bookingReference: "HSV-00003",
-          roomName: "Whole Villa",
-          guestName: "Michael Chen",
-          guestEmail: "michael.chen@techcorp.com",
-          guestPhone: "+1 415 555 0199",
-          checkIn: "2026-10-01T00:00:00.000Z",
-          checkOut: "2026-10-07T00:00:00.000Z",
-          adults: 8,
-          children: 3,
-          guestType: "foreign",
-          notes: "Corporate team retreat",
-          promoCode: "HSVVILLA",
-          discountPercent: 5,
-          basePrice: 490,
-          nights: 6,
-          totalPrice: 2793,
-          advancePayment: 698.25,
-          status: "confirmed",
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-      ];
-
+      // Fallback data for serverless environment — uses global store
+      let filtered = [...serverlessBookingsStore];
+      if (status) filtered = filtered.filter((b) => b.status === status);
+      if (search) {
+        const s = search.toLowerCase();
+        filtered = filtered.filter(
+          (b) =>
+            b.guestName.toLowerCase().includes(s) ||
+            b.guestEmail.toLowerCase().includes(s) ||
+            b.bookingReference.toLowerCase().includes(s.toUpperCase())
+        );
+      }
       resultData = {
-        bookings: defaultBookings,
-        total: defaultBookings.length,
+        bookings: filtered,
+        total: filtered.length,
         page: 1,
         pages: 1,
       };
@@ -611,14 +615,30 @@ router.post("/", async (req: Request, res: Response) => {
       };
     }
 
-    // Register booking in global store to block overbooking on subsequent requests from any device
-    serverlessBookingsStore.push({
+    // Register booking in global store so it appears in admin portal on all devices
+    serverlessBookingsStore.unshift({
       id: booking.id,
+      bookingReference: booking.bookingReference,
       roomId: actualRoomId,
       roomName,
+      guestName: booking.guestName,
+      guestEmail: booking.guestEmail,
+      guestPhone: booking.guestPhone,
       checkIn: inDate,
       checkOut: outDate,
-      status: "pending",
+      adults: booking.adults,
+      children: booking.children,
+      guestType: booking.guestType,
+      notes: booking.notes,
+      promoCode: booking.promoCode,
+      discountPercent: booking.discountPercent,
+      basePrice: booking.basePrice,
+      nights: booking.nights,
+      totalPrice: booking.totalPrice,
+      advancePayment: booking.advancePayment,
+      status: booking.status,
+      createdAt: booking.createdAt,
+      updatedAt: booking.updatedAt,
     });
 
     res.status(201).json({

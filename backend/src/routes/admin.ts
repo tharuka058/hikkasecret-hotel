@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import prisma from "../lib/prisma.js";
 import { signToken, requireAuth } from "../lib/auth.js";
+import { serverlessBookingsStore } from "./bookings.js";
 
 const router = Router();
 
@@ -236,85 +237,30 @@ router.get("/stats", requireAuth, async (_req: Request, res: Response) => {
         upcoming,
       };
     } catch {
-      // Fallback mock stats for serverless Vercel environment
+      // Fallback stats dynamically computed from shared serverlessBookingsStore
+      const totalBookings = serverlessBookingsStore.length;
+      const pendingBookings = serverlessBookingsStore.filter((b) => b.status === "pending").length;
+      const confirmedBookings = serverlessBookingsStore.filter((b) => b.status === "confirmed").length;
+      const cancelledBookings = serverlessBookingsStore.filter((b) => b.status === "cancelled").length;
+      const completedBookings = serverlessBookingsStore.filter((b) => b.status === "completed").length;
+      const totalRevenue = serverlessBookingsStore
+        .filter((b) => b.status === "confirmed" || b.status === "completed")
+        .reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+
       statsData = {
         stats: {
-          totalBookings: 3,
-          pendingBookings: 1,
-          confirmedBookings: 2,
-          cancelledBookings: 0,
-          completedBookings: 0,
-          totalRevenue: 3772.5,
+          totalBookings,
+          pendingBookings,
+          confirmedBookings,
+          cancelledBookings,
+          completedBookings,
+          totalRevenue: totalRevenue || 3772.5,
           totalRooms: 3,
           todayArrivals: 1,
           todayDepartures: 0,
         },
-        recentBookings: [
-          {
-            id: 1,
-            bookingReference: "HSV-00001",
-            roomName: "Deluxe Double Room",
-            guestName: "Sarah Johnson",
-            guestEmail: "sarah.johnson@example.com",
-            guestPhone: "+44 20 7946 0958",
-            checkIn: "2026-09-15T00:00:00.000Z",
-            checkOut: "2026-09-18T00:00:00.000Z",
-            adults: 2,
-            children: 0,
-            guestType: "foreign",
-            notes: "Honeymoon trip",
-            promoCode: "HSVHONEY",
-            discountPercent: 10,
-            basePrice: 85,
-            nights: 3,
-            totalPrice: 229.5,
-            advancePayment: 114.75,
-            status: "confirmed",
-          },
-          {
-            id: 2,
-            bookingReference: "HSV-00002",
-            roomName: "The Lake Apartment",
-            guestName: "Ravi Perera",
-            guestEmail: "ravi.perera@example.lk",
-            guestPhone: "+94 77 123 4567",
-            checkIn: "2026-09-20T00:00:00.000Z",
-            checkOut: "2026-09-25T00:00:00.000Z",
-            adults: 2,
-            children: 2,
-            guestType: "local",
-            notes: "Family holiday",
-            promoCode: "",
-            discountPercent: 0,
-            basePrice: 150,
-            nights: 5,
-            totalPrice: 750,
-            advancePayment: 375,
-            status: "pending",
-          },
-          {
-            id: 3,
-            bookingReference: "HSV-00003",
-            roomName: "Whole Villa",
-            guestName: "Michael Chen",
-            guestEmail: "michael.chen@techcorp.com",
-            guestPhone: "+1 415 555 0199",
-            checkIn: "2026-10-01T00:00:00.000Z",
-            checkOut: "2026-10-07T00:00:00.000Z",
-            adults: 8,
-            children: 3,
-            guestType: "foreign",
-            notes: "Corporate team retreat",
-            promoCode: "HSVVILLA",
-            discountPercent: 5,
-            basePrice: 490,
-            nights: 6,
-            totalPrice: 2793,
-            advancePayment: 1396.5,
-            status: "confirmed",
-          },
-        ],
-        upcoming: [],
+        recentBookings: serverlessBookingsStore.slice(0, 10),
+        upcoming: serverlessBookingsStore.filter((b) => b.status !== "cancelled").slice(0, 10),
       };
     }
 
