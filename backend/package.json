@@ -5,9 +5,9 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "prisma generate && tsc",
-    "vercel-build": "npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts",
-    "start": "npx tsx src/server.ts",
+    "build": "npx prisma generate && npx tsc",
+    "vercel-build": "npx prisma generate && npx tsc",
+    "start": "node dist/server.js",
     "db:push": "prisma db push",
     "db:seed": "npx tsx prisma/seed.ts",
     "db:studio": "prisma studio",
