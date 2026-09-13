@@ -3,12 +3,12 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 
-import roomsRouter from "./routes/rooms.js";
-import bookingsRouter from "./routes/bookings.js";
-import offersRouter from "./routes/offers.js";
-import adminRouter from "./routes/admin.js";
-import diningRouter from "./routes/dining.js";
-import contactRouter from "./routes/contact.js";
+import roomsRouter from "./routes/rooms";
+import bookingsRouter from "./routes/bookings";
+import offersRouter from "./routes/offers";
+import adminRouter from "./routes/admin";
+import diningRouter from "./routes/dining";
+import contactRouter from "./routes/contact";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
