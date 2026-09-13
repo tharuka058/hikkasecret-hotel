@@ -464,7 +464,7 @@ function Navbar({
   const [adminOpen, setAdminOpen] = useState(false);
   const [lookupOpen, setLookupOpen] = useState(false);
 
-  // Secure staff access via specific secret URL hash (#hsv_portal) or keyboard shortcut (Ctrl+Shift+A)
+  // Secret staff access via URL hash (#hsv_portal) or keyboard shortcut (Ctrl+Shift+A)
   useEffect(() => {
     const checkHash = () => {
       const h = window.location.hash.toLowerCase();
