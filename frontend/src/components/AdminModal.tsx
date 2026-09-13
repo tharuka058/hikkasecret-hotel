@@ -236,87 +236,88 @@ export default function AdminModal({ theme, onClose }: Props) {
   }
 
   // ══════════════════════════════════════════════════════════════════════════
-  // RENDER: Dashboard / Bookings — Full screen
+  // RENDER: Dashboard / Bookings — Full screen / Responsive
   // ══════════════════════════════════════════════════════════════════════════
   return (
-    <div className="fixed inset-0 z-50 flex" style={{ background: "rgba(0,0,0,0.72)", backdropFilter: "blur(4px)" }} onClick={onClose}>
-      <div className="flex w-full h-full max-w-6xl mx-auto my-4 rounded overflow-hidden"
+    <div className="fixed inset-0 z-50 flex p-0 md:p-4" style={{ background: "rgba(0,0,0,0.72)", backdropFilter: "blur(4px)" }} onClick={onClose}>
+      <div className="flex flex-col md:flex-row w-full h-full max-w-6xl mx-auto rounded-none md:rounded overflow-hidden"
         style={{ background: modalBg, boxShadow: "0 24px 80px rgba(0,0,0,0.6)", animation: "modalSlideIn 0.3s ease" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ── Sidebar ──────────────────────────────────────────────────────── */}
-        <div className="flex flex-col" style={{ width: 220, background: sideBg, borderRight: `1px solid ${border}`, flexShrink: 0 }}>
+        {/* ── Sidebar / Top Navigation Header ───────────────────────────────── */}
+        <div className="flex flex-col md:w-56 w-full" style={{ background: sideBg, borderRight: `1px solid ${border}`, borderBottom: `1px solid ${border}`, flexShrink: 0 }}>
           {/* Logo */}
-          <div className="px-6 py-7" style={{ borderBottom: `1px solid ${border}` }}>
-            <p style={{ fontFamily: "var(--font-serif)", fontSize: 16, fontWeight: 500, color: "#c9a84c" }}>HIKKA SECRET</p>
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, color: sub, letterSpacing: "0.16em", textTransform: "uppercase", marginTop: 2 }}>Admin Portal</p>
+          <div className="px-5 py-4 md:py-7 flex items-center justify-between" style={{ borderBottom: `1px solid ${border}` }}>
+            <div>
+              <p style={{ fontFamily: "var(--font-serif)", fontSize: 16, fontWeight: 500, color: "#c9a84c" }}>HIKKA SECRET</p>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, color: sub, letterSpacing: "0.16em", textTransform: "uppercase", marginTop: 2 }}>Admin Portal</p>
+            </div>
+            <button className="md:hidden" onClick={onClose} style={{ color: "#c9a84c", background: "none", border: "none", fontSize: 18, cursor: "pointer" }}>✕</button>
           </div>
 
-          {/* Nav links */}
-          <nav className="flex flex-col py-4 px-3 gap-1" style={{ flex: 1 }}>
-            {[
-              {
-                key: "dashboard",
-                label: "Dashboard",
-                icon: (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="7" height="9" />
-                    <rect x="14" y="3" width="7" height="5" />
-                    <rect x="14" y="12" width="7" height="9" />
-                    <rect x="3" y="16" width="7" height="5" />
-                  </svg>
-                )
-              },
-              {
-                key: "bookings",
-                label: "Reservations",
-                icon: (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
-                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
-                  </svg>
-                )
-              },
-            ].map((item) => (
-              <button key={item.key}
-                onClick={() => setView(item.key as AdminView)}
-                style={{
-                  textAlign: "left",
-                  padding: "10px 14px",
-                  borderRadius: 4,
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 12,
-                  fontWeight: view === item.key ? 600 : 400,
-                  color: view === item.key ? "#c9a84c" : sub,
-                  background: view === item.key ? (dark ? "rgba(201,168,76,0.1)" : "rgba(201,168,76,0.08)") : "transparent",
-                  transition: "all 0.15s",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-              >
-                {item.icon}
-                <span>{item.label}</span>
+          {/* Nav links & Actions */}
+          <div className="flex flex-row md:flex-col justify-between items-center md:items-stretch p-2 md:p-3 gap-2" style={{ flex: 1 }}>
+            <nav className="flex flex-row md:flex-col gap-1 flex-1">
+              {[
+                {
+                  key: "dashboard",
+                  label: "Dashboard",
+                  icon: (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="3" width="7" height="9" />
+                      <rect x="14" y="3" width="7" height="5" />
+                      <rect x="14" y="12" width="7" height="9" />
+                      <rect x="3" y="16" width="7" height="5" />
+                    </svg>
+                  )
+                },
+                {
+                  key: "bookings",
+                  label: "Reservations",
+                  icon: (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                      <rect x="8" y="2" width="8" height="4" rx="1" ry="1" />
+                    </svg>
+                  )
+                },
+              ].map((item) => (
+                <button key={item.key}
+                  onClick={() => setView(item.key as AdminView)}
+                  style={{
+                    textAlign: "left",
+                    padding: "8px 12px",
+                    borderRadius: 4,
+                    border: "none",
+                    cursor: "pointer",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 12,
+                    fontWeight: view === item.key ? 600 : 400,
+                    color: view === item.key ? "#c9a84c" : sub,
+                    background: view === item.key ? (dark ? "rgba(201,168,76,0.1)" : "rgba(201,168,76,0.08)") : "transparent",
+                    transition: "all 0.15s",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
+
+            {/* Logout & Close buttons */}
+            <div className="flex flex-row md:flex-col gap-2">
+              <button onClick={handleLogout}
+                style={{ padding: "7px 12px", fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", background: "transparent", border: `1px solid ${border}`, color: sub, borderRadius: 3, cursor: "pointer", whiteSpace: "nowrap" }}>
+                Sign Out
               </button>
-            ))}
-          </nav>
-
-          {/* Logout */}
-          <div className="p-4" style={{ borderTop: `1px solid ${border}` }}>
-            <button onClick={handleLogout}
-              style={{ width: "100%", padding: "9px", fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", background: "transparent", border: `1px solid ${border}`, color: sub, borderRadius: 3, cursor: "pointer" }}>
-              Sign Out
-            </button>
-          </div>
-
-          {/* Close */}
-          <div className="px-4 pb-4">
-            <button onClick={onClose}
-              style={{ width: "100%", padding: "9px", fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", background: "transparent", border: `1px solid rgba(201,168,76,0.3)`, color: "#c9a84c", borderRadius: 3, cursor: "pointer" }}>
-              ✕ Close
-            </button>
+              <button className="hidden md:block" onClick={onClose}
+                style={{ padding: "7px 12px", fontFamily: "var(--font-sans)", fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", background: "transparent", border: `1px solid rgba(201,168,76,0.3)`, color: "#c9a84c", borderRadius: 3, cursor: "pointer" }}>
+                ✕ Close
+              </button>
+            </div>
           </div>
         </div>
 
@@ -324,10 +325,10 @@ export default function AdminModal({ theme, onClose }: Props) {
         <div className="flex-1 overflow-y-auto">
           {/* ─── DASHBOARD view ─────────────────────────────────────────── */}
           {view === "dashboard" && (
-            <div className="p-8">
-              <div className="mb-8">
+            <div className="p-4 md:p-8">
+              <div className="mb-6 md:mb-8">
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 4 }}>Overview</p>
-                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 28, fontWeight: 400, color: text }}>Dashboard</h2>
+                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 24, fontWeight: 400, color: text }}>Dashboard</h2>
               </div>
 
               {/* Stats grid */}
@@ -416,10 +417,10 @@ export default function AdminModal({ theme, onClose }: Props) {
 
           {/* ─── BOOKINGS view ───────────────────────────────────────────── */}
           {view === "bookings" && (
-            <div className="p-8">
+            <div className="p-4 md:p-8">
               <div className="mb-6">
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#c9a84c", marginBottom: 4 }}>Management</p>
-                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 28, fontWeight: 400, color: text }}>All Reservations</h2>
+                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: 24, fontWeight: 400, color: text }}>All Reservations</h2>
               </div>
 
               {/* Filters */}
@@ -456,61 +457,63 @@ export default function AdminModal({ theme, onClose }: Props) {
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, marginTop: 8 }}>Try adjusting your search filters</p>
                 </div>
               ) : (
-                <div style={{ border: `1px solid ${border}`, borderRadius: 6, overflow: "hidden" }}>
-                  {/* Header */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 1fr 1fr 1fr", padding: "10px 16px", background: dark ? "rgba(255,255,255,0.04)" : "#f4f0ea", borderBottom: `1px solid ${border}` }}>
-                    {["Guest", "Room", "Check-in", "Nights", "Total", "Status"].map((h) => (
-                      <p key={h} style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: sub }}>{h}</p>
+                <div className="overflow-x-auto" style={{ border: `1px solid ${border}`, borderRadius: 6 }}>
+                  <div style={{ minWidth: 620 }}>
+                    {/* Header */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 1fr 1fr 1fr", padding: "10px 16px", background: dark ? "rgba(255,255,255,0.04)" : "#f4f0ea", borderBottom: `1px solid ${border}` }}>
+                      {["Guest", "Room", "Check-in", "Nights", "Total", "Status"].map((h) => (
+                        <p key={h} style={{ fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: sub }}>{h}</p>
+                      ))}
+                    </div>
+
+                    {/* Rows */}
+                    {bookings.map((b, i) => (
+                      <div key={b.id} style={{
+                        display: "grid",
+                        gridTemplateColumns: "1.5fr 1fr 1fr 1fr 1fr 1fr",
+                        padding: "14px 16px",
+                        borderTop: i > 0 ? `1px solid ${border}` : "none",
+                        alignItems: "center",
+                        background: i % 2 === 0 ? "transparent" : (dark ? "rgba(255,255,255,0.015)" : "rgba(26,58,82,0.015)"),
+                      }}>
+                        <div>
+                          <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: text }}>{b.guestName}</p>
+                          <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#c9a84c" }}>{b.bookingReference}</p>
+                        </div>
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: sub }}>{b.roomName.split(" ").slice(0, 2).join(" ")}</p>
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: text }}>
+                          {new Date(b.checkIn).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "2-digit" })}
+                        </p>
+                        <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: text }}>{b.nights} nts</p>
+                        <p style={{ fontFamily: "var(--font-serif)", fontSize: 14, fontWeight: 500, color: "#c9a84c" }}>${b.totalPrice.toLocaleString()}</p>
+
+                        {/* Status selector */}
+                        <select
+                          value={b.status}
+                          disabled={statusUpdating === b.id}
+                          onChange={(e) => handleStatusChange(b.id, e.target.value)}
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: 9,
+                            fontWeight: 700,
+                            letterSpacing: "0.1em",
+                            textTransform: "uppercase",
+                            padding: "4px 8px",
+                            borderRadius: 3,
+                            border: "none",
+                            cursor: statusUpdating === b.id ? "wait" : "pointer",
+                            outline: "none",
+                            ...STATUS_COLORS[b.status],
+                          }}
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="confirmed">Confirmed</option>
+                          <option value="cancelled">Cancelled</option>
+                          <option value="completed">Completed</option>
+                        </select>
+                      </div>
                     ))}
                   </div>
-
-                  {/* Rows */}
-                  {bookings.map((b, i) => (
-                    <div key={b.id} style={{
-                      display: "grid",
-                      gridTemplateColumns: "1.5fr 1fr 1fr 1fr 1fr 1fr",
-                      padding: "14px 16px",
-                      borderTop: i > 0 ? `1px solid ${border}` : "none",
-                      alignItems: "center",
-                      background: i % 2 === 0 ? "transparent" : (dark ? "rgba(255,255,255,0.015)" : "rgba(26,58,82,0.015)"),
-                    }}>
-                      <div>
-                        <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: text }}>{b.guestName}</p>
-                        <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "#c9a84c" }}>{b.bookingReference}</p>
-                      </div>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: sub }}>{b.roomName.split(" ").slice(0, 2).join(" ")}</p>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: text }}>
-                        {new Date(b.checkIn).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "2-digit" })}
-                      </p>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: text }}>{b.nights} nts</p>
-                      <p style={{ fontFamily: "var(--font-serif)", fontSize: 14, fontWeight: 500, color: "#c9a84c" }}>${b.totalPrice.toLocaleString()}</p>
-
-                      {/* Status selector */}
-                      <select
-                        value={b.status}
-                        disabled={statusUpdating === b.id}
-                        onChange={(e) => handleStatusChange(b.id, e.target.value)}
-                        style={{
-                          fontFamily: "var(--font-sans)",
-                          fontSize: 9,
-                          fontWeight: 700,
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          padding: "4px 8px",
-                          borderRadius: 3,
-                          border: "none",
-                          cursor: statusUpdating === b.id ? "wait" : "pointer",
-                          outline: "none",
-                          ...STATUS_COLORS[b.status],
-                        }}
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="completed">Completed</option>
-                      </select>
-                    </div>
-                  ))}
                 </div>
               )}
 
