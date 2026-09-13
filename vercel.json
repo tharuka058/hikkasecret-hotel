@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npx prisma generate --schema=backend/prisma/schema.prisma && npx prisma db push --schema=backend/prisma/schema.prisma && npx tsx backend/prisma/seed.ts && cd frontend && npm install && npm run build",
+  "buildCommand": "npx prisma generate --schema=backend/prisma/schema.prisma && npx prisma db push --schema=backend/prisma/schema.prisma --accept-data-loss && npx tsx backend/prisma/seed.ts && cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
   "functions": {
     "api/index.ts": {
