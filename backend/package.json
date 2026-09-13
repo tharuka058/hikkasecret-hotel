@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "prisma generate && tsc",
-    "vercel-build": "prisma generate && prisma db push --accept-data-loss && npx tsx prisma/seed.ts",
+    "vercel-build": "npx prisma generate && npx prisma db push --accept-data-loss && npx tsx prisma/seed.ts",
     "start": "npx tsx src/server.ts",
     "db:push": "prisma db push",
     "db:seed": "npx tsx prisma/seed.ts",
@@ -21,6 +21,9 @@
     "express": "^4.22.2",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.12.0",
+    "prisma": "^5.22.0",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.3",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -29,9 +32,6 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^22.20.1",
-    "prisma": "^5.22.0",
-    "tsx": "^4.23.13",
-    "typescript": "^5.9.3"
+    "@types/node": "^22.20.1"
   }
 }
