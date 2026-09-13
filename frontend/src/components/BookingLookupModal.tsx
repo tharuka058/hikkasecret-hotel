@@ -236,7 +236,7 @@ export default function BookingLookupModal({ theme, onClose, onBook }: Props) {
                     <span style={{ fontFamily: "var(--font-serif)", fontSize: 20, fontWeight: 500, color: "#c9a84c" }}>${booking.totalPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: sub }}>Advance Payment (50%)</span>
+                    <span style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: sub }}>Advance Payment (25%)</span>
                     <span style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 600, color: text }}>${booking.advancePayment.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">

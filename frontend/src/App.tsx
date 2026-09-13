@@ -2235,8 +2235,33 @@ function BookingModal({ theme, selectedRoom, prefill, onClose }: { theme: Theme;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setSubmitError("");
+
+    // 1. Full Name validation
+    const trimmedName = (form.name || "").trim();
+    if (!trimmedName || trimmedName.length < 3 || !/^[a-zA-Z\s'.\-]{3,60}$/.test(trimmedName)) {
+      setSubmitError("Please enter your full name (at least 3 letters, e.g. Jane Smith).");
+      return;
+    }
+
+    // 2. Email Address validation (requires valid domain format like name@example.com)
+    const trimmedEmail = (form.email || "").trim().toLowerCase();
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
+      setSubmitError("Please enter a valid email address (e.g. name@example.com).");
+      return;
+    }
+
+    // 3. Phone Number validation (requires valid international/local format, 8 to 15 digits)
+    const trimmedPhone = (form.phone || "").trim();
+    const phoneDigits = trimmedPhone.replace(/\D/g, "");
+    const phoneRegex = /^\+?[0-9\s\-\(\)]{8,20}$/;
+    if (!trimmedPhone || !phoneRegex.test(trimmedPhone) || phoneDigits.length < 8 || phoneDigits.length > 15) {
+      setSubmitError("Please enter a valid phone number with country code (e.g. +94 77 123 4567 or +1 415 555 0199).");
+      return;
+    }
+
+    setLoading(true);
     try {
       const roomNamesSummary = roomSelections.map((s, idx) => `Room ${idx + 1}: ${s.selected.name}`).join(", ");
       const primaryRoomId = roomSelections[0]?.selected.id ?? 1;
@@ -2245,9 +2270,9 @@ function BookingModal({ theme, selectedRoom, prefill, onClose }: { theme: Theme;
         roomId: primaryRoomId,
         roomIds: roomSelections.map(s => s.selected.id),
         roomName: roomNamesSummary,
-        guestName: form.name,
-        guestEmail: form.email,
-        guestPhone: form.phone,
+        guestName: trimmedName,
+        guestEmail: trimmedEmail,
+        guestPhone: trimmedPhone,
         checkIn: form.checkin,
         checkOut: form.checkout,
         adults: totalAdults,
@@ -2302,7 +2327,7 @@ function BookingModal({ theme, selectedRoom, prefill, onClose }: { theme: Theme;
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "#4caf82", marginTop: 8, fontWeight: 500 }}>✓ {confirmedBooking.discountPercent}% off applied ({confirmedBooking.promoCode})</p>
               )}
               {confirmedBooking && (
-                <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: sub, marginTop: 6 }}>Total: <strong style={{ color: text }}>${confirmedBooking.totalPrice.toFixed(2)}</strong> · Advance: <strong style={{ color: "#c9a84c" }}>${confirmedBooking.advancePayment.toFixed(2)}</strong></p>
+                <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: sub, marginTop: 6 }}>Total: <strong style={{ color: text }}>${confirmedBooking.totalPrice.toFixed(2)}</strong> · Advance (25%): <strong style={{ color: "#c9a84c" }}>${confirmedBooking.advancePayment.toFixed(2)}</strong></p>
               )}
             </div>
 
@@ -2312,13 +2337,13 @@ function BookingModal({ theme, selectedRoom, prefill, onClose }: { theme: Theme;
               <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 8 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", flexShrink: 0, marginTop: 5 }} />
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 400, color: text, lineHeight: 1.7, margin: 0 }}>
-                  A <strong style={{ color: "#c9a84c" }}>50% advance payment</strong> is required within 48 hours to secure your reservation.
+                  A <strong style={{ color: "#c9a84c" }}>25% advance payment</strong> is required within 48 hours to secure your reservation.
                 </p>
               </div>
               <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", flexShrink: 0, marginTop: 5 }} />
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 400, color: text, lineHeight: 1.7, margin: 0 }}>
-                  The remaining <strong style={{ color: "#c9a84c" }}>50% balance</strong> is due upon arrival at the property.
+                  The remaining <strong style={{ color: "#c9a84c" }}>75% balance</strong> is due upon arrival at the property.
                 </p>
               </div>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: sub, marginTop: 10, lineHeight: 1.6 }}>

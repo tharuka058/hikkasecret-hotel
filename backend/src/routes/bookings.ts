@@ -298,7 +298,7 @@ router.get("/", requireAuth, async (req: Request, res: Response) => {
           basePrice: 85,
           nights: 3,
           totalPrice: 229.5,
-          advancePayment: 114.75,
+          advancePayment: 57.38,
           status: "confirmed",
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
@@ -321,7 +321,7 @@ router.get("/", requireAuth, async (req: Request, res: Response) => {
           basePrice: 150,
           nights: 5,
           totalPrice: 750,
-          advancePayment: 375,
+          advancePayment: 187.5,
           status: "pending",
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
@@ -344,7 +344,7 @@ router.get("/", requireAuth, async (req: Request, res: Response) => {
           basePrice: 490,
           nights: 6,
           totalPrice: 2793,
-          advancePayment: 1396.5,
+          advancePayment: 698.25,
           status: "confirmed",
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
@@ -407,6 +407,12 @@ router.post("/", async (req: Request, res: Response) => {
       return;
     }
 
+    // Validate guest name
+    if (guestName.trim().length < 2) {
+      res.status(400).json({ error: "Please enter your full name (at least 2 letters)." });
+      return;
+    }
+
     const inDate = new Date(checkIn);
     const outDate = new Date(checkOut);
 
@@ -420,9 +426,18 @@ router.post("/", async (req: Request, res: Response) => {
       return;
     }
 
-    // Validate email format
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestEmail)) {
-      res.status(400).json({ error: "Invalid email address" });
+    // Validate email format strictly
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(guestEmail.trim())) {
+      res.status(400).json({ error: "Please enter a valid email address (e.g. name@example.com)." });
+      return;
+    }
+
+    // Validate phone format strictly (require between 8 and 15 digits)
+    const phoneDigits = (guestPhone || "").replace(/\D/g, "");
+    const phoneRegex = /^\+?[0-9\s\-\(\)]{8,20}$/;
+    if (!guestPhone || !phoneRegex.test(guestPhone.trim()) || phoneDigits.length < 8 || phoneDigits.length > 15) {
+      res.status(400).json({ error: "Please enter a valid phone number with country code (e.g. +94 77 123 4567 or +1 415 555 0199)." });
       return;
     }
 
@@ -482,12 +497,12 @@ router.post("/", async (req: Request, res: Response) => {
       }
     }
 
-    // Calculate totals
+    // Calculate totals (25% advance payment requirement)
     const nights = calcNights(inDate, outDate);
     const subtotal = basePrice * nights;
     const discount = (subtotal * discountPercent) / 100;
     const totalPrice = Math.round((subtotal - discount) * 100) / 100;
-    const advancePayment = Math.round((totalPrice * 0.5) * 100) / 100;
+    const advancePayment = Math.round((totalPrice * 0.25) * 100) / 100;
 
     // Generate unique reference
     const bookingReference = await generateReference();
